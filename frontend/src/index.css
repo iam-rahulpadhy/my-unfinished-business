@@ -138,6 +138,8 @@ body::after {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
+    isolation: isolate;
+    transform: translateZ(0);
   }
 
   .ticker-text {

@@ -27,7 +27,7 @@ export default function DashboardPage() {
   const [chartMode, setChartMode] = useState<'line' | 'heatmap'>('line')
   const [chartRange, setChartRange] = useState<'1W' | '1M' | 'ALL'>('ALL')
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [avatarKey, setAvatarKey] = useState(Date.now())
+  const [avatarKey, setAvatarKey] = useState(0)
 
   const { data: summary, isLoading: summaryLoading } = useStockSummary()
   const { data: ledgerEntries, isLoading: ledgerLoading } = useLedger()
