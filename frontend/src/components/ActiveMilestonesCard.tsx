@@ -6,14 +6,11 @@ import { differenceInDays, parseISO, startOfDay } from 'date-fns'
 import { Milestone, createMilestone, updateMilestone, deleteMilestone } from '../api/milestones'
 import MilestoneModal from './MilestoneModal'
 import { useMilestones } from '../hooks/useData'
-import { useQueryClient } from '@tanstack/react-query'
-
 export default function ActiveMilestonesCard() {
   const [today, setToday] = useState(startOfDay(new Date()))
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingMilestone, setEditingMilestone] = useState<Milestone | undefined>(undefined)
   
-  const queryClient = useQueryClient()
   const { data: milestones = [], isLoading, isError: hasError, refetch } = useMilestones()
 
   useEffect(() => {
