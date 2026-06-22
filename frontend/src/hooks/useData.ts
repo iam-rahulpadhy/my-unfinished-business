@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { stockApi } from '../api/stock'
 import { ledgerApi } from '../api/ledger'
+import { getMilestones } from '../api/milestones'
 
 export function useStockSummary() {
   return useQuery({
@@ -23,6 +24,14 @@ export function useLedger() {
   return useQuery({
     queryKey: ['ledger'],
     queryFn: ledgerApi.getAll,
+    staleTime: 5 * 60 * 1000,
+  })
+}
+
+export function useMilestones() {
+  return useQuery({
+    queryKey: ['milestones'],
+    queryFn: getMilestones,
     staleTime: 5 * 60 * 1000,
   })
 }

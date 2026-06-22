@@ -3,33 +3,20 @@ import { Target } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { differenceInDays, parseISO, startOfDay } from 'date-fns'
 
-import { Milestone, getMilestones, createMilestone, updateMilestone, deleteMilestone } from '../api/milestones'
+import { Milestone, createMilestone, updateMilestone, deleteMilestone } from '../api/milestones'
 import MilestoneModal from './MilestoneModal'
+import { useMilestones } from '../hooks/useData'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function ActiveMilestonesCard() {
   const [today, setToday] = useState(startOfDay(new Date()))
-  const [milestones, setMilestones] = useState<Milestone[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingMilestone, setEditingMilestone] = useState<Milestone | undefined>(undefined)
-  const [isLoading, setIsLoading] = useState(true)
-  const [hasError, setHasError] = useState(false)
-
-  const fetchMilestones = async () => {
-    setIsLoading(true)
-    setHasError(false)
-    try {
-      const data = await getMilestones()
-      setMilestones(data)
-    } catch (err) {
-      console.error('Failed to fetch milestones', err)
-      setHasError(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  
+  const queryClient = useQueryClient()
+  const { data: milestones = [], isLoading, isError: hasError, refetch } = useMilestones()
 
   useEffect(() => {
-    fetchMilestones()
     const timer = setInterval(() => setToday(startOfDay(new Date())), 1000 * 60 * 60)
     return () => clearInterval(timer)
   }, [])
@@ -66,7 +53,7 @@ export default function ActiveMilestonesCard() {
           </div>
         ) : hasError ? (
           <div className="text-sm text-accent-bear/70 text-center py-4 font-mono border border-dashed border-accent-bear/20 rounded-lg">
-            Failed to load. <button onClick={fetchMilestones} className="underline hover:text-accent-bear transition-colors">Retry?</button>
+            Failed to load. <button onClick={() => refetch()} className="underline underline-offset-2 hover:text-text-primary">Retry?</button>
           </div>
         ) : milestones.length === 0 ? (
           <div className="text-sm text-text-muted text-center py-4 font-mono border border-dashed border-bg-border/50 rounded-lg cursor-pointer hover:bg-bg-hover transition-colors" onClick={() => { setEditingMilestone(undefined); setIsModalOpen(true) }}>
@@ -134,11 +121,13 @@ export default function ActiveMilestonesCard() {
           } else {
             await createMilestone(data)
           }
-          fetchMilestones()
+          await refetch()
+          setIsModalOpen(false)
         }}
         onDelete={async (id) => {
           await deleteMilestone(id)
-          fetchMilestones()
+          await refetch()
+          setIsModalOpen(false)
         }}
       />
     </motion.div>

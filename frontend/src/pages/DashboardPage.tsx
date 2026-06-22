@@ -150,18 +150,18 @@ export default function DashboardPage() {
             </div>
 
             {/* ── CARD 2: Progress Index (Col 1, Row 1) ── */}
-            <div className="lg:col-span-1 glass-card p-8 border border-bg-border shadow-glass flex flex-col justify-center relative overflow-hidden">
+            <div className="lg:col-span-1 glass-card p-8 border border-bg-border shadow-glass flex flex-col justify-center relative">
               <PriceHeader summary={summary} isLoading={summaryLoading} />
             </div>
 
             {/* ── CARD 3: Action Center (Col 1, Row 1) ── */}
-            <div className="lg:col-span-1 glass-card p-8 border border-bg-border shadow-glass flex flex-col justify-center relative overflow-hidden">
+            <div className="lg:col-span-1 glass-card p-8 border border-bg-border shadow-glass flex flex-col justify-center relative">
               <h3 className="text-xs font-bold text-text-muted uppercase tracking-widest mb-4">Quick Action</h3>
               <motion.button
                 id="new-entry-btn"
                 onClick={() => { setEditEntry(null); setPanelOpen(true) }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-4 rounded-xl bg-accent-bull text-bg-base font-bold tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-shadow"
-                whileHover={{ scale: 1.02 }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-4 rounded-xl bg-accent-bull text-bg-base font-bold tracking-wide transition-shadow"
+                whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(255,255,255,0.15)" }}
                 whileTap={{ scale: 0.98 }}
               >
                 <Plus size={20} />

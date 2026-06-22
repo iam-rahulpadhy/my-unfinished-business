@@ -128,12 +128,12 @@ export function StatBadge({
 function PriceHeaderSkeleton() {
   return (
     <div className="space-y-4 animate-pulse">
-      <div className="h-4 w-24 bg-bg-card rounded" />
-      <div className="h-14 w-48 bg-bg-card rounded" />
+      <div className="h-4 w-24 bg-bg-hover rounded" />
+      <div className="h-14 w-48 bg-bg-hover rounded" />
       <div className="flex gap-4">
-        <div className="h-8 w-20 bg-bg-card rounded" />
-        <div className="h-8 w-20 bg-bg-card rounded" />
-        <div className="h-8 w-20 bg-bg-card rounded" />
+        <div className="h-8 w-20 bg-bg-hover rounded" />
+        <div className="h-8 w-20 bg-bg-hover rounded" />
+        <div className="h-8 w-20 bg-bg-hover rounded" />
       </div>
     </div>
   )
