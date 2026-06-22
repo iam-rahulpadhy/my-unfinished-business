@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Target } from 'lucide-react'
+
 import { motion } from 'framer-motion'
 import { differenceInDays, parseISO, startOfDay } from 'date-fns'
 
@@ -43,8 +43,8 @@ export default function ActiveMilestonesCard() {
     >
       <div className="flex items-center justify-between mb-6 relative z-10">
         <h2 className="text-sm font-bold tracking-widest text-text-primary uppercase flex items-center gap-2">
-          <Target size={16} />
-          Active Milestones
+          <span className="w-1.5 h-1.5 rounded-full bg-accent-bull animate-pulse" />
+          ACTIVE MILESTONES
         </h2>
         <button
           onClick={() => {
@@ -105,7 +105,7 @@ export default function ActiveMilestonesCard() {
                     isUrgent ? 'text-accent-bear bg-accent-bear/10' :
                     'text-text-secondary bg-bg-hover'
                   }`}>
-                    <Target size={12} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse shrink-0" />
                     {m.isCompleted ? 'Done' : isPassed ? 'Passed' : `${daysLeft}d`}
                   </div>
                 </div>
