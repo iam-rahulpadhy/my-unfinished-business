@@ -11,7 +11,7 @@ export default function ActiveMilestonesCard() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingMilestone, setEditingMilestone] = useState<Milestone | undefined>(undefined)
   
-  const { data: milestones = [], isLoading, isError: hasError, refetch } = useMilestones()
+  const { data: milestones = [], isLoading, isError: hasError, error, refetch } = useMilestones()
 
   useEffect(() => {
     const timer = setInterval(() => setToday(startOfDay(new Date())), 1000 * 60 * 60)
@@ -49,8 +49,9 @@ export default function ActiveMilestonesCard() {
             ))}
           </div>
         ) : hasError ? (
-          <div className="text-sm text-accent-bear/70 text-center py-4 font-mono border border-dashed border-accent-bear/20 rounded-lg">
-            Failed to load. <button onClick={() => refetch()} className="underline underline-offset-2 hover:text-text-primary">Retry?</button>
+          <div className="text-sm text-accent-bear/70 text-center py-4 font-mono border border-dashed border-accent-bear/20 rounded-lg flex flex-col items-center gap-2">
+            <span>Failed to load: {error instanceof Error ? error.message : 'Unknown error'}</span>
+            <button onClick={() => refetch()} className="underline underline-offset-2 hover:text-text-primary">Retry?</button>
           </div>
         ) : milestones.length === 0 ? (
           <div className="text-sm text-text-muted text-center py-4 font-mono border border-dashed border-bg-border/50 rounded-lg cursor-pointer hover:bg-bg-hover transition-colors" onClick={() => { setEditingMilestone(undefined); setIsModalOpen(true) }}>
