@@ -36,17 +36,13 @@ spring:
       write-dates-as-timestamps: false
 
 server:
-  port: ${PORT:8080}  # Natively binds to Render's port variable, defaults to 8080 locally
+  port: 8080  # Keeps the port locked to 8080 to perfectly align with your Dockerfile EXPOSE rule
 
-# ─── JWT Configuration ────────────────────────────────────────────────────────
+# ─── Custom Application Security Configurations ───────────────────────────────
 app:
   jwt:
     secret: ${JWT_SECRET:CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION}
-    expiration-ms: 86400000   # 24 hours
-
-  # ─── Master Reset Key ─────────────────────────────────────────────────────
+    expiration-ms: 86400000
   reset-key: ${RESET_KEY:CHANGE_THIS_TO_YOUR_SECRET_RESET_PHRASE}
-
-# ─── CORS ─────────────────────────────────────────────────────────────────────
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
