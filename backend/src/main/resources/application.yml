@@ -18,6 +18,11 @@ spring:
         format_sql: true
     open-in-view: false
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -38,9 +43,6 @@ spring:
 server:
   port: 8080
 
-spring.servlet.multipart:
-  max-file-size: 5MB
-  max-request-size: 5MB
 
 # ─── JWT Configuration ────────────────────────────────────────────────────────
 # CHANGE THIS before any public deployment. Use a 512-bit random secret.
@@ -56,4 +58,4 @@ app:
 
 # ─── CORS ─────────────────────────────────────────────────────────────────────
   cors:
-    allowed-origins: "http://localhost:5173,http://localhost:3000"
+    allowed-origins: "http://localhost:5173,http://localhost:3000,https://my-unfinished-business.vercel.app"

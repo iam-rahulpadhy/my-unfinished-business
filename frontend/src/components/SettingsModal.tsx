@@ -62,19 +62,16 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       if (avatarFile) {
         try {
           await authApi.updateAvatar(avatarFile)
+          window.dispatchEvent(new Event('avatarUpdated'))
         } catch (avatarErr) {
           console.error('Failed to upload avatar', avatarErr)
-          alert('Profile saved, but the image file was too large or failed to upload.')
         }
       }
-      // Trigger a re-render of avatar in other components by updating a dummy timestamp
-      window.dispatchEvent(new Event('avatarUpdated'))
-      
-      onClose()
     } catch (err) {
       console.error('Failed to save settings', err)
     } finally {
       setSaving(false)
+      onClose()
     }
   }
 
