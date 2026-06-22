@@ -2,8 +2,13 @@
 import axios from 'axios'
 import { useAuthStore } from '../store/authStore'
 
+const isProd = import.meta.env.PROD
+const baseURL = isProd 
+  ? 'https://my-unfinished-business.onrender.com/api' 
+  : (import.meta.env.VITE_API_URL || '/api')
+
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -20,7 +25,13 @@ apiClient.interceptors.request.use((config) => {
 
 // ─── Response Interceptor: Handle 401 ─────────────────────────────────────
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (typeof response.data === 'string' && response.data.trim().toLowerCase().startsWith('<!doctype html>')) {
+      console.error('API returned HTML instead of JSON. The backend is likely unreachable.')
+      return Promise.reject(new Error('Backend unreachable'))
+    }
+    return response
+  },
   (error) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().clearAuth()
