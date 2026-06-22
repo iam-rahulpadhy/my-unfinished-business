@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:mub_db}
+    username: ${DB_USER:mub_user}
+    password: ${DB_PASSWORD:mub_secret}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rahulpadhy58@gmail.com
+    password: bpfd uvnm boie vjlp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  reset-key: ${RESET_KEY:CHANGE_THIS_TO_YOUR_SECRET_RESET_PHRASE}
+
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:80"

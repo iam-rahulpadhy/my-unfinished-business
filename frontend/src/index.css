@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode */
+    --color-bg-base: 250 250 250;     /* #FAFAFA */
+    --color-bg-surface: 244 244 245;  /* #F4F4F5 */
+    --color-bg-card: 255 255 255;     /* #FFFFFF */
+    --color-bg-hover: 228 228 231;    /* #E4E4E7 */
+    --color-bg-border: 228 228 231;   /* #E4E4E7 */
+    
+    --color-text-primary: 9 9 11;     /* #09090B */
+    --color-text-secondary: 63 63 70; /* #3F3F46 */
+    --color-text-muted: 113 113 122;  /* #71717A */
+
+    --color-accent-bull: 9 9 11;      /* #09090B */
+    --color-accent-bear: 113 113 122; /* #71717A */
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-card-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+
+    --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
+    
+    --selection-bg: rgba(9, 9, 11, 0.15);
+    --selection-text: #09090B;
+    --focus-ring: rgba(9, 9, 11, 0.4);
+    
+    --autofill-bg: #F4F4F5;
+    --autofill-text: #09090B;
+  }
+
+  .dark {
+    /* Dark Mode */
+    --color-bg-base: 5 5 5;           /* #050505 */
+    --color-bg-surface: 10 10 10;     /* #0A0A0A */
+    --color-bg-card: 17 17 17;        /* #111111 */
+    --color-bg-hover: 26 26 26;       /* #1A1A1A */
+    --color-bg-border: 34 34 34;      /* #222222 */
+    
+    --color-text-primary: 250 250 250;   /* #FAFAFA */
+    --color-text-secondary: 161 161 170; /* #A1A1AA */
+    --color-text-muted: 82 82 91;        /* #52525B */
+
+    --color-accent-bull: 250 250 250;    /* #FAFAFA */
+    --color-accent-bear: 82 82 91;       /* #52525B */
+
+    --glass-bg: rgba(10, 10, 10, 0.7);
+    --glass-card-bg: rgba(17, 17, 17, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.04);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+    --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+
+    --selection-bg: rgba(250, 250, 250, 0.2);
+    --selection-text: #FAFAFA;
+    --focus-ring: rgba(250, 250, 250, 0.4);
+
+    --autofill-bg: #0A0A0A;
+    --autofill-text: #FAFAFA;
+  }
+}
+
+/* Base Rest */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Smooth Dark Mode Transition */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-bg-base text-text-primary font-sans;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  background-image: radial-gradient(circle at 50% -20%, rgb(var(--color-bg-hover) / 0.6), transparent 80%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ─── Glassmorphism Utility ───────────────────────────────────────────────── */
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-card {
+    background: var(--glass-card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+  }
+
+  .ticker-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .bull {
+    @apply text-accent-bull;
+  }
+
+  .bear {
+    @apply text-accent-bear;
+  }
+
+  .bull-bg {
+    @apply bg-accent-bull/10 text-accent-bull;
+  }
+
+  .bear-bg {
+    @apply bg-accent-bear/15 text-accent-bear;
+  }
+
+  /* Subtle section divider */
+  .divider {
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Glass shadow utility (referenced throughout dashboard) */
+  .shadow-glass {
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Custom scrollbar for overflow containers */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 2px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+/* ─── Selection ───────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* ─── Focus Ring ──────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 1px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Autofill Override ───────────────────────────────────────────────────── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--autofill-bg) inset !important;
+    -webkit-text-fill-color: var(--autofill-text) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

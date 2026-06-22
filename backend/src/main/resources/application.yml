@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: my-unfinished-business
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mub_db
+    username: mub_user
+    password: mub_secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rahulpadhy58@gmail.com
+    password: bpfd uvnm boie vjlp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+# ─── JWT Configuration ────────────────────────────────────────────────────────
+# CHANGE THIS before any public deployment. Use a 512-bit random secret.
+app:
+  jwt:
+    secret: "CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION"
+    expiration-ms: 86400000   # 24 hours
+
+  # ─── Master Reset Key ─────────────────────────────────────────────────────
+  # CHANGE THIS to a secret phrase only you know.
+  # Used to reset your password without email. Keep it safe.
+  reset-key: "CHANGE_THIS_TO_YOUR_SECRET_RESET_PHRASE"
+
+# ─── CORS ─────────────────────────────────────────────────────────────────────
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:3000"
