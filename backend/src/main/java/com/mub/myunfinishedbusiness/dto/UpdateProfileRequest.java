@@ -11,6 +11,9 @@ public class UpdateProfileRequest {
     @Size(max = 255, message = "Bio cannot exceed 255 characters")
     private String bio;
 
+    @Size(max = 255, message = "Quotation cannot exceed 255 characters")
+    private String quotation;
+
     @Size(max = 50, message = "Button name cannot exceed 50 characters")
     private String captureButtonName;
 

@@ -11,8 +11,11 @@ interface SettingsModalProps {
 }
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-  const { captureButtonName, customDisciplines, updateProfile } = useAuthStore()
+  const { displayName, bio, quotation, captureButtonName, customDisciplines, updateProfile } = useAuthStore()
   
+  const [editName, setEditName] = useState(displayName || '')
+  const [editBio, setEditBio] = useState(bio || '')
+  const [editQuotation, setEditQuotation] = useState(quotation || '')
   const [btnName, setBtnName] = useState(captureButtonName || 'Daily Overview')
   const [disciplines, setDisciplines] = useState(
     customDisciplines ? customDisciplines.split(',').join('\n') : ''
@@ -24,13 +27,15 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
   useEffect(() => {
     if (isOpen) {
-      setBtnName(captureButtonName || 'Daily Overview')
+      setEditName(displayName || '')
+      setEditBio(bio || '')
+      setEditQuotation(quotation || '')
       setBtnName(captureButtonName || 'Daily Overview')
       setDisciplines(customDisciplines ? customDisciplines.split(',').join('\n') : '')
       setAvatarFile(null)
       setAvatarPreview(null)
     }
-  }, [isOpen, captureButtonName, customDisciplines])
+  }, [isOpen, displayName, bio, quotation, captureButtonName, customDisciplines])
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -50,11 +55,17 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         .join(',')
 
       const res = await authApi.updateProfile({
+        displayName: editName.trim() || undefined,
+        bio: editBio.trim() || undefined,
+        quotation: editQuotation.trim() || undefined,
         captureButtonName: btnName,
         customDisciplines: formattedDisciplines
       })
 
       updateProfile({
+        displayName: res.displayName || null,
+        bio: res.bio || null,
+        quotation: res.quotation || null,
         captureButtonName: res.captureButtonName || null,
         customDisciplines: res.customDisciplines || null
       })
@@ -133,6 +144,51 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     onChange={handleAvatarChange} 
                   />
                 </label>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-text-secondary mb-2">
+                  Display Name
+                </label>
+                <input
+                  type="text"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  maxLength={50}
+                  className="w-full bg-bg-base border border-bg-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-accent-bull transition-colors"
+                  placeholder="e.g., John Doe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-text-secondary mb-2">
+                  Tagline (Bio)
+                </label>
+                <input
+                  type="text"
+                  value={editBio}
+                  onChange={(e) => setEditBio(e.target.value)}
+                  maxLength={50}
+                  className="w-full bg-bg-base border border-bg-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-accent-bull transition-colors"
+                  placeholder="e.g., Competitive Programmer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-text-secondary mb-2">
+                  Quotation
+                </label>
+                <input
+                  type="text"
+                  value={editQuotation}
+                  onChange={(e) => setEditQuotation(e.target.value)}
+                  maxLength={100}
+                  className="w-full bg-bg-base border border-bg-border rounded-lg px-4 py-2 text-text-primary focus:outline-none focus:border-accent-bull transition-colors italic"
+                  placeholder="e.g., Stay hungry, stay foolish."
+                />
+                <p className="text-xs text-text-muted mt-2">
+                  A short optional quote to display under your tagline.
+                </p>
               </div>
 
               <div>

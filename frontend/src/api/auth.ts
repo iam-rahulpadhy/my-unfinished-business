@@ -24,7 +24,7 @@ export const authApi = {
     const res = await apiClient.post('/auth/reset-password', data)
     return res.data
   },
-  updateProfile: async (data: { displayName?: string, bio?: string, captureButtonName?: string, customDisciplines?: string }): Promise<AuthResponse> => {
+  updateProfile: async (data: { displayName?: string, bio?: string, quotation?: string, captureButtonName?: string, customDisciplines?: string }): Promise<AuthResponse> => {
     const res = await apiClient.put<AuthResponse>('/auth/profile', data)
     return res.data
   },

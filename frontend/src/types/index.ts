@@ -40,6 +40,7 @@ export interface AuthResponse {
   username: string
   displayName?: string
   bio?: string
+  quotation?: string
   captureButtonName?: string
   customDisciplines?: string
   role: string

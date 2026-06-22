@@ -36,6 +36,7 @@ export default function DashboardPage() {
   const displayName = useAuthStore((s) => s.displayName)
   const username = useAuthStore((s) => s.username)
   const bio = useAuthStore((s) => s.bio)
+  const quotation = useAuthStore((s) => s.quotation)
   const captureButtonName = useAuthStore((s) => s.captureButtonName) || 'Daily Overview'
   const updateProfile = useAuthStore((s) => s.updateProfile)
   const nameToDisplay = displayName || username || 'User'
@@ -46,67 +47,7 @@ export default function DashboardPage() {
     return () => window.removeEventListener('avatarUpdated', handleAvatarUpdate)
   }, [])
 
-  const [isEditingName, setIsEditingName] = useState(false)
-  const [editNameValue, setEditNameValue] = useState('')
-  
-  const [isEditingBio, setIsEditingBio] = useState(false)
-  const [editBioValue, setEditBioValue] = useState('')
-  
-  const [savingProfile, setSavingProfile] = useState(false)
 
-  const handleStartEditName = () => {
-    setEditNameValue(displayName || username || '')
-    setIsEditingName(true)
-  }
-
-  const handleSaveName = async () => {
-    if (editNameValue.trim() === (displayName || username || '')) {
-      setIsEditingName(false)
-      return
-    }
-    setSavingProfile(true)
-    try {
-      const res = await authApi.updateProfile({ displayName: editNameValue })
-      updateProfile({ displayName: res.displayName || null })
-      setIsEditingName(false)
-    } catch (err) {
-      console.error('Failed to update name', err)
-    } finally {
-      setSavingProfile(false)
-    }
-  }
-
-  const handleStartEditBio = () => {
-    setEditBioValue(bio || '')
-    setIsEditingBio(true)
-  }
-
-  const handleSaveBio = async () => {
-    if (editBioValue.trim() === (bio || '')) {
-      setIsEditingBio(false)
-      return
-    }
-    setSavingProfile(true)
-    try {
-      const res = await authApi.updateProfile({ bio: editBioValue })
-      updateProfile({ bio: res.bio || null })
-      setIsEditingBio(false)
-    } catch (err) {
-      console.error('Failed to update bio', err)
-    } finally {
-      setSavingProfile(false)
-    }
-  }
-
-  const handleKeyDownName = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSaveName()
-    if (e.key === 'Escape') setIsEditingName(false)
-  }
-
-  const handleKeyDownBio = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSaveBio()
-    if (e.key === 'Escape') setIsEditingBio(false)
-  }
 
   const handleEdit = (entry: DailyLedger) => {
     setEditEntry({
@@ -191,62 +132,22 @@ export default function DashboardPage() {
                 <div className="group flex items-center gap-3">
                   <h1 className="text-4xl font-black tracking-tight text-text-primary flex items-center flex-wrap">
                     Welcome back,&nbsp;
-                  {isEditingName ? (
-                    <input
-                      autoFocus
-                      type="text"
-                      value={editNameValue}
-                      onChange={(e) => setEditNameValue(e.target.value)}
-                      onBlur={handleSaveName}
-                      onKeyDown={handleKeyDownName}
-                      disabled={savingProfile}
-                      className="bg-bg-surface border border-bg-border rounded px-2 py-1 text-text-secondary focus:outline-none focus:border-text-primary text-4xl font-black w-[300px] max-w-full"
-                    />
-                  ) : (
-                    <span className="text-text-secondary cursor-pointer" onClick={handleStartEditName}>
+                  <span className="text-text-secondary">
                       {nameToDisplay}.
                     </span>
-                  )}
-                </h1>
-                {!isEditingName && (
-                  <button
-                    onClick={handleStartEditName}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-md hover:bg-bg-surface text-text-muted hover:text-text-primary"
-                    title="Edit Display Name"
-                  >
-                    <Edit2 size={18} />
-                  </button>
-                )}
-              </div>
+                  </h1>
+                </div>
 
-              <div className="flex items-center gap-2 mt-2">
-                {isEditingBio ? (
-                  <input
-                    autoFocus
-                    type="text"
-                    value={editBioValue}
-                    onChange={(e) => setEditBioValue(e.target.value)}
-                    onBlur={handleSaveBio}
-                    onKeyDown={handleKeyDownBio}
-                    disabled={savingProfile}
-                    placeholder="e.g. Competitive Programmer"
-                    className="bg-bg-surface border border-bg-border rounded px-2 py-0.5 text-accent-bull text-base font-mono w-[300px] max-w-full focus:outline-none focus:border-text-primary"
-                  />
-                ) : (
-                  <span className="text-accent-bull text-base font-mono cursor-pointer" onClick={handleStartEditBio}>
-                    {bio || 'Add a subtitle (e.g. Competitive Programmer) +'}
+              <div className="flex flex-col mt-2">
+                <span className="text-accent-bull text-base font-mono">
+                  {bio || 'Add a subtitle (e.g. Competitive Programmer)'}
+                </span>
+                {quotation && (
+                  <span className="text-text-muted text-sm italic mt-1">
+                    "{quotation}"
                   </span>
                 )}
-                {!isEditingBio && bio && (
-                  <button
-                    onClick={handleStartEditBio}
-                    className="opacity-0 group-hover/bio:opacity-100 transition-opacity p-1 rounded-md hover:bg-bg-surface text-text-muted hover:text-text-primary"
-                    title="Edit Bio"
-                  >
-                    <Edit2 size={12} />
-                  </button>
-                )}
-                </div>
+              </div>
               </div>
             </div>
 

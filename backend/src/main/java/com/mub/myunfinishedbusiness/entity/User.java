@@ -36,6 +36,9 @@ public class User {
     @Column(name = "bio", length = 255)
     private String bio;
 
+    @Column(name = "quotation", length = 255)
+    private String quotation;
+
     @Column(name = "capture_button_name", length = 50)
     private String captureButtonName;
 

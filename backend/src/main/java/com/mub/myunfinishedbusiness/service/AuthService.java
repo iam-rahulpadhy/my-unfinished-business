@@ -56,6 +56,7 @@ public class AuthService {
             .username(user.getUsername())
             .displayName(user.getDisplayName())
             .bio(user.getBio())
+            .quotation(user.getQuotation())
             .captureButtonName(user.getCaptureButtonName())
             .customDisciplines(user.getCustomDisciplines())
             .role(user.getRole().name())
@@ -79,6 +80,7 @@ public class AuthService {
             .username(user.getUsername())
             .displayName(user.getDisplayName())
             .bio(user.getBio())
+            .quotation(user.getQuotation())
             .captureButtonName(user.getCaptureButtonName())
             .customDisciplines(user.getCustomDisciplines())
             .role(user.getRole().name())
@@ -140,6 +142,9 @@ public class AuthService {
         if (request.getBio() != null) {
             user.setBio(request.getBio().trim().isEmpty() ? null : request.getBio().trim());
         }
+        if (request.getQuotation() != null) {
+            user.setQuotation(request.getQuotation().trim().isEmpty() ? null : request.getQuotation().trim());
+        }
         if (request.getCaptureButtonName() != null) {
             user.setCaptureButtonName(request.getCaptureButtonName().trim().isEmpty() ? null : request.getCaptureButtonName().trim());
         }
@@ -154,6 +159,7 @@ public class AuthService {
             .username(user.getUsername())
             .displayName(user.getDisplayName())
             .bio(user.getBio())
+            .quotation(user.getQuotation())
             .captureButtonName(user.getCaptureButtonName())
             .customDisciplines(user.getCustomDisciplines())
             .role(user.getRole().name())

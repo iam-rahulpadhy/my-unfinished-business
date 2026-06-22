@@ -6,11 +6,12 @@ interface AuthState {
   username: string | null
   displayName: string | null
   bio: string | null
+  quotation: string | null
   captureButtonName: string | null
   customDisciplines: string | null
   role: string | null
-  setAuth: (token: string, username: string, displayName: string | null, bio: string | null, captureButtonName: string | null, customDisciplines: string | null, role: string) => void
-  updateProfile: (data: { displayName?: string | null, bio?: string | null, captureButtonName?: string | null, customDisciplines?: string | null }) => void
+  setAuth: (token: string, username: string, displayName: string | null, bio: string | null, quotation: string | null, captureButtonName: string | null, customDisciplines: string | null, role: string) => void
+  updateProfile: (data: { displayName?: string | null, bio?: string | null, quotation?: string | null, captureButtonName?: string | null, customDisciplines?: string | null }) => void
   clearAuth: () => void
 }
 
@@ -21,12 +22,13 @@ export const useAuthStore = create<AuthState>()(
       username: null,
       displayName: null,
       bio: null,
+      quotation: null,
       captureButtonName: null,
       customDisciplines: null,
       role: null,
-      setAuth: (token, username, displayName, bio, captureButtonName, customDisciplines, role) => set({ token, username, displayName, bio, captureButtonName, customDisciplines, role }),
+      setAuth: (token, username, displayName, bio, quotation, captureButtonName, customDisciplines, role) => set({ token, username, displayName, bio, quotation, captureButtonName, customDisciplines, role }),
       updateProfile: (data) => set((state) => ({ ...state, ...data })),
-      clearAuth: () => set({ token: null, username: null, displayName: null, bio: null, captureButtonName: null, customDisciplines: null, role: null }),
+      clearAuth: () => set({ token: null, username: null, displayName: null, bio: null, quotation: null, captureButtonName: null, customDisciplines: null, role: null }),
     }),
     {
       name: 'mub-auth',   // localStorage key

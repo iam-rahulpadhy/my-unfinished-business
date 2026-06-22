@@ -57,7 +57,7 @@ export default function LoginPage() {
     setLoading(true)
     try {
       const res = await authApi.login({ username, password })
-      setAuth(res.token, res.username, res.displayName || null, res.bio || null, res.captureButtonName || null, res.customDisciplines || null, res.role)
+      setAuth(res.token, res.username, res.displayName || null, res.bio || null, res.quotation || null, res.captureButtonName || null, res.customDisciplines || null, res.role)
       navigate('/')
     } catch {
       setError('Invalid credentials. Check your username and password.')
@@ -81,7 +81,7 @@ export default function LoginPage() {
     setLoading(true)
     try {
       const res = await authApi.register({ username, email, password, displayName })
-      setAuth(res.token, res.username, res.displayName || null, res.bio || null, res.captureButtonName || null, res.customDisciplines || null, res.role)
+      setAuth(res.token, res.username, res.displayName || null, res.bio || null, res.quotation || null, res.captureButtonName || null, res.customDisciplines || null, res.role)
       navigate('/')
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { message?: string } } })

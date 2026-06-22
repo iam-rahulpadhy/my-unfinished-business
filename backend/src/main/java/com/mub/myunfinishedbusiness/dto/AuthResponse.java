@@ -14,6 +14,7 @@ public class AuthResponse {
     private String username;
     private String displayName;
     private String bio;
+    private String quotation;
     private String captureButtonName;
     private String customDisciplines;
     private String role;
