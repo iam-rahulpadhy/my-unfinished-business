@@ -46,7 +46,8 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/users/*/avatar").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/users/{username}/avatar").permitAll()
+                .requestMatchers("/error").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/stock/**").authenticated()
                 .anyRequest().authenticated()
             )
