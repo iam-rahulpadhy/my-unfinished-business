@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Edit2, Plus, Settings } from 'lucide-react'
-import { authApi } from '../api/auth'
+import { Plus, Settings } from 'lucide-react'
 import apiClient from '../api/apiClient'
 import Navbar from '../components/Navbar'
 import PriceHeader, { StatBadge } from '../components/PriceHeader'
@@ -38,7 +37,6 @@ export default function DashboardPage() {
   const bio = useAuthStore((s) => s.bio)
   const quotation = useAuthStore((s) => s.quotation)
   const captureButtonName = useAuthStore((s) => s.captureButtonName) || 'Daily Overview'
-  const updateProfile = useAuthStore((s) => s.updateProfile)
   const nameToDisplay = displayName || username || 'User'
 
   useEffect(() => {
