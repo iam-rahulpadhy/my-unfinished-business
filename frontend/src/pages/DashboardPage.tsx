@@ -4,7 +4,6 @@ import { Edit2, Plus, Settings } from 'lucide-react'
 import { authApi } from '../api/auth'
 import apiClient from '../api/apiClient'
 import Navbar from '../components/Navbar'
-import { API_BASE_URL } from '../api/apiClient'
 import PriceHeader, { StatBadge } from '../components/PriceHeader'
 import StockChart from '../components/StockChart'
 import ConsistencyHeatmap from '../components/ConsistencyHeatmap'
@@ -39,10 +38,7 @@ export default function DashboardPage() {
   const bio = useAuthStore((s) => s.bio)
   const captureButtonName = useAuthStore((s) => s.captureButtonName) || 'Daily Overview'
   const updateProfile = useAuthStore((s) => s.updateProfile)
-  const avatarTimestamp = useAuthStore(s => s.avatarTimestamp)
   const nameToDisplay = displayName || username || 'User'
-
-  const avatarUrl = username ? `${API_BASE_URL}/users/${username}/avatar?t=${avatarTimestamp || avatarKey}` : undefined
 
   useEffect(() => {
     const handleAvatarUpdate = () => setAvatarKey(Date.now())
