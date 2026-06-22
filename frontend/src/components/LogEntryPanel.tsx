@@ -215,8 +215,8 @@ export default function LogEntryPanel({ isOpen, onClose, editEntry }: LogEntryPa
                     type="number"
                     step="0.01"
                     min="0.01"
-                    value={form.closingPrice}
-                    onChange={(e) => setForm((p) => ({ ...p, closingPrice: parseFloat(e.target.value) || 0 }))}
+                    value={form.closingPrice || ''}
+                    onChange={(e) => setForm((p) => ({ ...p, closingPrice: e.target.value === '' ? 0 : parseFloat(e.target.value) }))}
                     className="w-full bg-bg-base border border-bg-border rounded-lg pl-8 pr-4 py-3 text-text-primary text-sm focus:outline-none focus:border-accent-bull/50 transition-colors font-mono"
                     required
                   />
