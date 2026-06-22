@@ -54,14 +54,19 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         customDisciplines: formattedDisciplines
       })
 
-      if (avatarFile) {
-        await authApi.updateAvatar(avatarFile)
-      }
-
       updateProfile({
         captureButtonName: res.captureButtonName || null,
         customDisciplines: res.customDisciplines || null
       })
+
+      if (avatarFile) {
+        try {
+          await authApi.updateAvatar(avatarFile)
+        } catch (avatarErr) {
+          console.error('Failed to upload avatar', avatarErr)
+          alert('Profile saved, but the image file was too large or failed to upload.')
+        }
+      }
       // Trigger a re-render of avatar in other components by updating a dummy timestamp
       window.dispatchEvent(new Event('avatarUpdated'))
       

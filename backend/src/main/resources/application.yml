@@ -38,6 +38,10 @@ spring:
 server:
   port: 8080
 
+spring.servlet.multipart:
+  max-file-size: 5MB
+  max-request-size: 5MB
+
 # ─── JWT Configuration ────────────────────────────────────────────────────────
 # CHANGE THIS before any public deployment. Use a 512-bit random secret.
 app:
