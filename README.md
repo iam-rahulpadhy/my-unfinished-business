@@ -1,116 +1,34 @@
-# MY UNFINISHED BUSINESS — $MUB
-
-> *Everything but the living.*
-
-A premium, cinematic personal accountability platform modeled as a live stock ticker. Your discipline drives the price.
-
----
-
-## Stack
-
-| Layer | Technology |
-|---|---|
-| **Backend** | Java 21, Spring Boot 3.3, Spring Security (JWT), JPA/Hibernate |
-| **Database** | PostgreSQL 16 |
-| **Frontend** | React 18, Vite, Tailwind CSS v3, Framer Motion, TradingView lightweight-charts |
-| **Auth** | JWT (JJWT 0.12.x), BCrypt |
-| **DevOps** | Docker, Docker Compose |
+<div align="center">
+  <h1>📈 My Unfinished Business</h1>
+  <p><em>My life, unedited. Your personal growth, visualized as a live stock market.</em></p>
+</div>
 
 ---
 
-## Quick Start (Docker)
+## 💡 The Concept
 
-```bash
-# 1. Clone
-git clone <repo> && cd myunfinishedbusiness
+**My Unfinished Business** is a unique, gamified life-tracking dashboard that treats your personal growth like a publicly traded company. Instead of traditional to-do lists or habit trackers, this project visualizes your daily choices, habits, and milestones as a **Live Stock Price**. 
 
-# 2. (Optional) Change JWT secret in docker-compose.yml
-#    Look for: CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION
+When you make positive choices, complete habits, or hit milestones, your personal stock goes up. When you slip up or make negative choices, your stock dips. It is a psychological experiment in accountability: *if you were a stock, would you invest in yourself today?*
 
-# 3. Start everything
-docker-compose up --build
+## 🎯 Primary Uses
 
-# Services:
-#   Frontend  →  http://localhost:5173
-#   Backend   →  http://localhost:8080
-#   pgAdmin   →  http://localhost:5050  (admin@mub.local / admin)
-```
+- **Personal Accountability:** Treat your life like a business. Visualize the compounding effect of your daily decisions over weeks and months.
+- **Habit Tracking (Gamified):** Break away from boring checkboxes. See exactly how much "value" a good habit adds to your life.
+- **Goal Setting:** Establish clear milestones and track your journey toward them.
+- **Self-Reflection:** Look back at your interactive charts to identify trends in your motivation, discipline, and personal growth.
 
----
+## ✨ Key Features
 
-## Local Development
-
-### Backend
-```bash
-# Requires: Java 21, Maven 3.9+, local PostgreSQL running
-cd backend
-./mvnw spring-boot:run
-```
-
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-# Opens at http://localhost:5173
-# Proxies /api/* → http://localhost:8080
-```
+* **Dynamic "Stock Price" Engine:** Your personal value fluctuates based on daily ledger entries. Watch your net worth grow as you stack positive days.
+* **The Daily Ledger:** A clean, intuitive journal where you log your daily actions. Did you work out? +₹10. Did you procrastinate? -₹5. Every action has a reaction.
+* **Interactive Timeline Charts:** Beautiful, interactive graphs that let you visualize your personal trajectory over the past week, month, or all-time.
+* **Active Milestones:** Set long-term goals and track your progress. Hitting a milestone is like an earnings report beating expectations—your stock skyrockets.
+* **Personalized Dashboard:** Customize your profile with your own avatar and a personal quotation to keep you motivated.
+* **Premium Glassmorphic Design:** A stunning, immersive dark-mode interface that feels like a professional trading terminal tailored specifically for your life.
 
 ---
 
-## API Reference
-
-### Auth
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Create account |
-| POST | `/api/auth/login` | Get JWT token |
-
-### Ledger (protected)
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/ledger` | Get all entries |
-| GET | `/api/ledger/{id}` | Get single entry |
-| POST | `/api/ledger` | Create entry |
-| PUT | `/api/ledger/{id}` | Update entry |
-| DELETE | `/api/ledger/{id}` | Delete entry |
-
-### Stock (protected)
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/stock/summary` | Price, % change, 7-day SMA, ATH/ATL |
-| GET | `/api/stock/chart?range=1W\|1M\|ALL` | Chart time-series data |
-
----
-
-## Project Structure
-
-```
-myunfinishedbusiness/
-├── docker-compose.yml
-├── backend/
-│   ├── Dockerfile
-│   ├── pom.xml
-│   └── src/main/java/com/mub/myunfinishedbusiness/
-│       ├── entity/          # User, DailyLedger
-│       ├── repository/      # JPA repositories
-│       ├── dto/             # Request/Response DTOs
-│       ├── service/         # AuthService, LedgerService
-│       ├── controller/      # AuthController, LedgerController, StockController
-│       ├── security/        # JWT, Spring Security config
-│       └── exception/       # Global exception handler
-└── frontend/
-    ├── Dockerfile
-    ├── nginx.conf
-    └── src/
-        ├── api/             # Axios services
-        ├── components/      # Navbar, StockChart, PriceHeader, etc.
-        ├── hooks/           # React Query hooks
-        ├── pages/           # Dashboard, Ledger, Login
-        ├── store/           # Zustand auth store
-        └── types/           # TypeScript interfaces
-```
-
----
-
-*$MUB — The market never lies.*
+<div align="center">
+  <i>"Invest in yourself. You are your own greatest asset."</i>
+</div>
