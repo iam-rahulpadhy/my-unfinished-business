@@ -3,9 +3,9 @@ spring:
     name: my-unfinished-business
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/mub_db
-    username: mub_user
-    password: mub_secret
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/mub_db}
+    username: ${SPRING_DATASOURCE_USERNAME:mub_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:mub_secret}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -36,20 +36,17 @@ spring:
       write-dates-as-timestamps: false
 
 server:
-  port: 8080
+  port: ${PORT:8080}  # Natively binds to Render's port variable, defaults to 8080 locally
 
 # ─── JWT Configuration ────────────────────────────────────────────────────────
-# CHANGE THIS before any public deployment. Use a 512-bit random secret.
 app:
   jwt:
-    secret: "CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION"
+    secret: ${JWT_SECRET:CHANGE_THIS_TO_A_STRONG_512BIT_SECRET_BEFORE_PRODUCTION}
     expiration-ms: 86400000   # 24 hours
 
   # ─── Master Reset Key ─────────────────────────────────────────────────────
-  # CHANGE THIS to a secret phrase only you know.
-  # Used to reset your password without email. Keep it safe.
-  reset-key: "CHANGE_THIS_TO_YOUR_SECRET_RESET_PHRASE"
+  reset-key: ${RESET_KEY:CHANGE_THIS_TO_YOUR_SECRET_RESET_PHRASE}
 
 # ─── CORS ─────────────────────────────────────────────────────────────────────
   cors:
-    allowed-origins: "http://localhost:5173,http://localhost:3000"
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
