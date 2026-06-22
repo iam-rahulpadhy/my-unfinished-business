@@ -112,7 +112,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     <img src={avatarPreview} alt="Avatar Preview" className="w-full h-full object-cover" />
                   ) : username ? (
                     <img 
-                      src={`${apiClient.defaults.baseURL}/users/${username}/avatar`} 
+                      src={`${apiClient.defaults.baseURL}/users/${username}/avatar?t=${Date.now()}`} 
                       alt="Current Avatar" 
                       className="w-full h-full object-cover"
                       onError={(e) => { e.currentTarget.style.display = 'none' }}
