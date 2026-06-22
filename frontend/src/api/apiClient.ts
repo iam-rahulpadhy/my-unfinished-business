@@ -3,12 +3,12 @@ import axios from 'axios'
 import { useAuthStore } from '../store/authStore'
 
 const isProd = import.meta.env.PROD
-const baseURL = isProd 
+export const API_BASE_URL = isProd 
   ? 'https://my-unfinished-business.onrender.com/api' 
   : (import.meta.env.VITE_API_URL || '/api')
 
 const apiClient = axios.create({
-  baseURL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
