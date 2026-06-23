@@ -33,7 +33,8 @@ apiClient.interceptors.response.use(
     return response
   },
   (error) => {
-    if (error.response?.status === 401) {
+    // Handle 401 Unauthorized or 403 Forbidden
+    if (error.response?.status === 401 || error.response?.status === 403) {
       useAuthStore.getState().clearAuth()
       if (window.location.pathname !== '/login') {
         window.location.href = '/login'
