@@ -34,6 +34,7 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
   const chartRef = useRef<HTMLDivElement>(null)
   const chartApiRef = useRef<IChartApi | null>(null)
   const seriesRef = useRef<ISeriesApi<'Area'> | null>(null)
+  const [lastDotPos, setLastDotPos] = useState<{ x: number, y: number } | null>(null)
 
   // ── Initialize Chart ────────────────────────────────────────────────────
   useEffect(() => {
@@ -78,7 +79,6 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
       crosshairMarkerRadius: 5,
       priceLineColor: isDark ? 'rgba(250, 250, 250, 0.3)' : 'rgba(9, 9, 11, 0.3)',
       priceLineStyle: LineStyle.Dashed,
-      lastPriceAnimation: 1, // LastPriceAnimationMode.Continuous
     })
 
     chartApiRef.current = chart
@@ -129,7 +129,7 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
       return {
         time: d.time,
         position: 'inBar' as const,
-        color: isDark ? '#FAFAFA' : '#09090B',
+        color: isDark ? 'rgba(250,250,250,0.15)' : 'rgba(9,9,11,0.15)',
         shape: 'circle' as const,
         size: 1,
       }
@@ -137,6 +137,30 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
 
     seriesRef.current.setMarkers(markers)
     chartApiRef.current?.timeScale().fitContent()
+
+    // Setup custom blinking dot position overlay
+    const updateDot = () => {
+      if (!chartApiRef.current || !seriesRef.current || !data || data.length === 0) return
+      const lastData = data[data.length - 1]
+      const time = lastData.entryDate as unknown as LineData['time']
+      const x = chartApiRef.current.timeScale().timeToCoordinate(time)
+      const y = seriesRef.current.priceToCoordinate(Number(lastData.closingPrice))
+      
+      if (x !== null && y !== null) {
+        setLastDotPos({ x, y })
+      } else {
+        setLastDotPos(null)
+      }
+    }
+    
+    updateDot()
+    chartApiRef.current.timeScale().subscribeVisibleTimeRangeChange(updateDot)
+    chartApiRef.current.timeScale().subscribeSizeChange(updateDot)
+
+    return () => {
+      chartApiRef.current?.timeScale().unsubscribeVisibleTimeRangeChange(updateDot)
+      chartApiRef.current?.timeScale().unsubscribeSizeChange(updateDot)
+    }
   }, [data, isDark])
 
   // ── Update chart options when theme changes ──────────────────────────────
@@ -191,7 +215,23 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
       </div>
 
       {/* Chart Container */}
-      <div className="relative flex-1">
+      <div className="relative flex-1 h-64 md:h-80">
+        {lastDotPos && (
+          <div 
+            className="absolute z-20 pointer-events-none"
+            style={{ 
+              left: lastDotPos.x, 
+              top: lastDotPos.y,
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="absolute w-4 h-4 rounded-full animate-ping" style={{ backgroundColor: isDark ? 'rgba(250,250,250,0.5)' : 'rgba(9,9,11,0.5)' }} />
+              <div className="w-2.5 h-2.5 rounded-full z-10" style={{ backgroundColor: isDark ? '#FAFAFA' : '#09090B' }} />
+            </div>
+          </div>
+        )}
+        
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center z-10 bg-bg-surface/80 backdrop-blur-sm">
             <div className="flex flex-col items-center gap-3">
@@ -207,7 +247,7 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
           </div>
         )}
 
-        <div ref={chartRef} className="w-full h-64 md:h-80" />
+        <div ref={chartRef} className="w-full h-full" />
       </div>
     </motion.div>
   )

@@ -38,11 +38,11 @@ export default function LedgerCard({ entry, onEdit }: LedgerCardProps) {
     >
       {/* Card Header (always visible) */}
       <button
-        className="w-full flex items-center gap-4 px-5 py-4 text-left hover:bg-bg-hover/30 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-4 text-left hover:bg-bg-hover/30 transition-colors"
         onClick={() => setExpanded((v) => !v)}
       >
         {/* Date */}
-        <div className="min-w-[80px]">
+        <div className="min-w-[70px] shrink-0">
           <p className="text-text-primary font-mono text-sm font-semibold">
             {format(new Date(entry.entryDate + 'T00:00:00'), 'MMM dd')}
           </p>
@@ -83,7 +83,7 @@ export default function LedgerCard({ entry, onEdit }: LedgerCardProps) {
         <motion.div
           animate={{ rotate: expanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-text-muted"
+          className="text-text-muted shrink-0"
         >
           <ChevronDown size={16} />
         </motion.div>
