@@ -129,9 +129,9 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
       return {
         time: d.time,
         position: 'inBar' as const,
-        color: isDark ? 'rgba(250,250,250,0.15)' : 'rgba(9,9,11,0.15)',
+        color: isDark ? '#FAFAFA' : '#09090B',
         shape: 'circle' as const,
-        size: 1,
+        size: 0.1,
       }
     }).filter(Boolean) as any[]
 
