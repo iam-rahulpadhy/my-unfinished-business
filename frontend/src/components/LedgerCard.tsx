@@ -60,7 +60,7 @@ export default function LedgerCard({ entry, onEdit }: LedgerCardProps) {
 
         {/* Change badge */}
         <div className={clsx(
-          'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold',
+          'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold whitespace-nowrap shrink-0',
           isNeutral ? 'bg-bg-card text-text-secondary border border-bg-border' :
           isPositive ? 'bull-bg' : 'bear-bg'
         )}>

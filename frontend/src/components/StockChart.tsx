@@ -78,6 +78,7 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
       crosshairMarkerRadius: 5,
       priceLineColor: isDark ? 'rgba(250, 250, 250, 0.3)' : 'rgba(9, 9, 11, 0.3)',
       priceLineStyle: LineStyle.Dashed,
+      lastPriceAnimation: 1, // LastPriceAnimationMode.Continuous
     })
 
     chartApiRef.current = chart
@@ -122,6 +123,19 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
     }))
 
     seriesRef.current.setData(chartData)
+
+    const markers = chartData.map((d, i) => {
+      if (i === chartData.length - 1) return null;
+      return {
+        time: d.time,
+        position: 'inBar' as const,
+        color: isDark ? '#FAFAFA' : '#09090B',
+        shape: 'circle' as const,
+        size: 1,
+      }
+    }).filter(Boolean) as any[]
+
+    seriesRef.current.setMarkers(markers)
     chartApiRef.current?.timeScale().fitContent()
   }, [data, isDark])
 
