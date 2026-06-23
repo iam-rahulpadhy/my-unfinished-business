@@ -5,7 +5,6 @@ import apiClient from '../api/apiClient'
 import Navbar from '../components/Navbar'
 import PriceHeader, { StatBadge } from '../components/PriceHeader'
 import StockChart from '../components/StockChart'
-import ConsistencyHeatmap from '../components/ConsistencyHeatmap'
 import ActiveMilestonesCard from '../components/ActiveMilestonesCard'
 import LogEntryPanel from '../components/LogEntryPanel'
 import LedgerCard from '../components/LedgerCard'
@@ -24,7 +23,6 @@ export default function DashboardPage() {
   const [panelOpen, setPanelOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [editEntry, setEditEntry] = useState<{ id: string; data: DailyLedgerRequest } | null>(null)
-  const [chartMode, setChartMode] = useState<'line' | 'heatmap'>('line')
   const [chartRange, setChartRange] = useState<'1W' | '1M' | 'ALL'>('ALL')
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
   const [avatarKey, setAvatarKey] = useState(0)
@@ -177,7 +175,7 @@ export default function DashboardPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
               
               <div className="flex items-center justify-between mb-6 relative z-10 flex-wrap gap-4">
-                <h2 className="text-text-primary font-bold text-sm tracking-wide uppercase">Consistency Overview</h2>
+                <h2 className="text-text-primary font-bold text-sm tracking-wide uppercase">Growth Chart</h2>
                 
                 <div className="flex items-center gap-4">
                   {/* Tag Filter */}
@@ -193,31 +191,11 @@ export default function DashboardPage() {
                       ))}
                     </select>
                   )}
-
-                  {/* Toggle Mode */}
-                  <div className="flex items-center bg-bg-surface border border-bg-border rounded-lg p-0.5">
-                    <button
-                      onClick={() => setChartMode('line')}
-                      className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${chartMode === 'line' ? 'bg-bg-hover text-text-primary' : 'text-text-muted hover:text-text-primary'}`}
-                    >
-                      Line
-                    </button>
-                    <button
-                      onClick={() => setChartMode('heatmap')}
-                      className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${chartMode === 'heatmap' ? 'bg-bg-hover text-text-primary' : 'text-text-muted hover:text-text-primary'}`}
-                    >
-                      Heatmap
-                    </button>
-                  </div>
                 </div>
               </div>
 
               <div className="flex-1 relative z-10 overflow-hidden">
-                {chartMode === 'line' ? (
-                  <StockChart filteredEntries={filteredEntries} range={chartRange} onRangeChange={setChartRange} />
-                ) : (
-                  <ConsistencyHeatmap entries={filteredEntries} />
-                )}
+                <StockChart filteredEntries={filteredEntries} range={chartRange} onRangeChange={setChartRange} />
               </div>
             </div>
 
