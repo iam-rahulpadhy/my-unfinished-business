@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createChart, ColorType, LineStyle, type IChartApi, type ISeriesApi, type LineData } from 'lightweight-charts'
 import { motion } from 'framer-motion'
 import clsx from 'clsx'
@@ -154,8 +154,8 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
     }
     
     updateDot()
-    chartApiRef.current.timeScale().subscribeVisibleTimeRangeChange(updateDot)
-    chartApiRef.current.timeScale().subscribeSizeChange(updateDot)
+    chartApiRef.current?.timeScale().subscribeVisibleTimeRangeChange(updateDot)
+    chartApiRef.current?.timeScale().subscribeSizeChange(updateDot)
 
     return () => {
       chartApiRef.current?.timeScale().unsubscribeVisibleTimeRangeChange(updateDot)
