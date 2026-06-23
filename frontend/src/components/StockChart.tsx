@@ -45,6 +45,7 @@ export default function StockChart({ filteredEntries, range, onRangeChange }: St
         textColor: isDark ? '#A1A1AA' : '#71717A',
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: 11,
+        attributionLogo: false,
       },
       grid: {
         vertLines: { color: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)', style: LineStyle.Dotted },
